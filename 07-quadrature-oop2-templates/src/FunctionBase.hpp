@@ -1,0 +1,207 @@
+/**
+ * \file FunctionBase.hpp
+ *
+ * This file is part of the seminar: From the basics of modern OOP to
+ * parallel scientific programming in C++11.
+ *
+ * \author Matthias Moller
+ *
+ * \brief
+ * This class implements an abstract function that provides the
+ * ability to integrate itself via one-dimensional Gauss quadrature
+ * rules.
+ *
+ */
+
+// This is a standard trick to prevent that header files are included
+// more than once. If this file has not been included yet than
+// FUNCTION_BASE_HPP is not defined. The first inclusion of this file
+// defines FUNCTION_BASE_HPP so that the content between #ifndef and
+// #endif is not included for a second time.
+#ifndef FUNCTION_BASE_HPP
+#define FUNCTION_BASE_HPP
+
+using namespace std;
+
+// Templated class with data type TData for all floating point data.
+// By default, TData is assumed as double.
+template<typename TData=double>
+class FunctionBase{
+  
+private:
+  
+public:
+  // The ()-operator (=access operator) is implemented as
+  // virtual. That means, that we need to implement this operator in
+  // any class that is derived from class FunctionBase
+  virtual TData operator()(TData) = 0;
+  
+  // Method that integrates the function object over the interval
+  // [a,b]. If no third parameter is given, then the 3-pt Gauss
+  // quadratur rule is used. Otherwise, the number of quadrature
+  // points is specified by parameter n. Note that this is a templated
+  // method since the template parameter TIndex is not part of the
+  // class definition.
+  template<typename TIndex=int>
+  TData integrate(TData a, TData b, TIndex n=3){
+    // Define local variables
+    TData *x, *w;
+    
+    // Allocate memory and initialize quadrature points and weights
+    switch(n){
+    case 1:
+      // n = 1
+      x = new TData[n] {0.0};
+      w = new TData[n] {2.0};
+      break;
+    case 2:
+      // n = 2
+      x = new TData[n] {0.5773502691896257645091488,
+                        -0.5773502691896257645091488};
+      w = new TData[n] {1.0000000000000000000000000,
+                        1.0000000000000000000000000};
+      break;
+    case 3:
+      // n = 3
+      x = new TData[n] {0.0000000000000000000000000,
+                        0.7745966692414833770358531,
+                        -0.7745966692414833770358531};
+      w = new TData[n] {0.8888888888888888888888889,
+                        0.5555555555555555555555556,
+                        0.5555555555555555555555556};
+      break;
+    case 4:
+      // n = 4
+      x = new TData[n] {0.3399810435848562648026658,
+                        0.8611363115940525752239465,
+                        -0.3399810435848562648026658,
+                        -0.8611363115940525752239465};
+      w = new TData[n] {0.6521451548625461426269361,
+                        0.3478548451374538573730639,
+                        0.6521451548625461426269361,
+                        0.3478548451374538573730639};
+      break;
+    case 5:
+      // n = 5
+      x = new TData[n] {0.0000000000000000000000000,
+                        0.5384693101056830910363144,
+                        0.9061798459386639927976269,
+                        -0.5384693101056830910363144,
+                        -0.9061798459386639927976269};
+      w = new TData[n] {0.5688888888888888888888889,
+                        0.4786286704993664680412915,
+                        0.2369268850561890875142640,
+                        0.4786286704993664680412915,
+                        0.2369268850561890875142640};
+      break;
+    case 6:
+      // n = 6
+      x = new TData[n] {0.2386191860831969086305017,
+                        0.6612093864662645136613996,
+                        0.9324695142031520278123016,
+                        -0.2386191860831969086305017,
+                        -0.6612093864662645136613996,
+                        -0.9324695142031520278123016};
+      w = new TData[n] {0.4679139345726910473898703,
+                        0.3607615730481386075698335,
+                        0.1713244923791703450402961,
+                        0.4679139345726910473898703,
+                        0.3607615730481386075698335,
+                        0.1713244923791703450402961};
+      break;
+    case 7:
+      // n = 7
+      x = new TData[n] {0.0000000000000000000000000,
+                        0.4058451513773971669066064,
+                        0.7415311855993944398638648,
+                        0.9491079123427585245261897,
+                        -0.4058451513773971669066064,
+                        -0.7415311855993944398638648,
+                        -0.9491079123427585245261897};
+      w = new TData[n] {0.4179591836734693877551020,
+                        0.3818300505051189449503698,
+                        0.2797053914892766679014678,
+                        0.1294849661688696932706114,
+                        0.3818300505051189449503698,
+                        0.2797053914892766679014678,
+                        0.1294849661688696932706114};
+      break;
+    case 8:
+      // n = 8
+      x = new TData[n] {0.1834346424956498049394761,
+                        0.5255324099163289858177390,
+                        0.7966664774136267395915539,
+                        0.9602898564975362316835609,
+                        -0.1834346424956498049394761,
+                        -0.5255324099163289858177390,
+                        -0.7966664774136267395915539,
+                        -0.9602898564975362316835609};
+      w = new TData[n] {0.3626837833783619829651504,
+                        0.3137066458778872873379622,
+                        0.2223810344533744705443560,
+                        0.1012285362903762591525314,
+                        0.3626837833783619829651504,
+                        0.3137066458778872873379622,
+                        0.2223810344533744705443560,
+                        0.1012285362903762591525314};
+      break;
+    case 9:
+      // n = 9
+      x = new TData[n] {0.0000000000000000000000000,
+                        0.3242534234038089290385380,
+                        0.6133714327005903973087020,
+                        0.8360311073266357942994298,
+                        0.9681602395076260898355762,
+                        -0.3242534234038089290385380,
+                        -0.6133714327005903973087020,
+                        -0.8360311073266357942994298,
+                        -0.9681602395076260898355762};
+      w = new TData[n] {0.3302393550012597631645251,
+                        0.3123470770400028400686304,
+                        0.2606106964029354623187429,
+                        0.1806481606948574040584720,
+                        0.0812743883615744119718922,
+                        0.3123470770400028400686304,
+                        0.2606106964029354623187429,
+                        0.1806481606948574040584720,
+                        0.0812743883615744119718922};
+      break;
+    case 10:
+      // n = 10
+      x = new TData[n] {0.1488743389816312108848260,
+                        0.4333953941292471907992659,
+                        0.6794095682990244062343274,
+                        0.8650633666889845107320967,
+                        0.9739065285171717200779640,
+                        -0.1488743389816312108848260,
+                        -0.4333953941292471907992659,
+                        -0.6794095682990244062343274,
+                        -0.8650633666889845107320967,
+                        -0.9739065285171717200779640};
+      w = new TData[n] {0.2955242247147528701738930,
+                        0.2692667193099963550912269,
+                        0.2190863625159820439955349,
+                        0.1494513491505805931457763,
+                        0.0666713443086881375935688,
+                        0.2955242247147528701738930,
+                        0.2692667193099963550912269,
+                        0.2190863625159820439955349,
+                        0.1494513491505805931457763,
+                        0.0666713443086881375935688};
+      break;
+    default:          
+      cout << "Non-supported number of quadrature points." << endl;
+      exit(1);
+    }
+
+    // Finally, perform numerical integration:
+    // int_a^b f(x) dx = (b-a)/2 * sum_{k=0}^n w[k]*f((b-a)/2 * x[k] + (a+b)/2 )
+    TData Int=0.0;
+    for (TIndex k=0; k<n; k++)
+      Int += w[k]*(*this)((b-a)/2.0 * x[k] + (a+b)/2.0);
+    Int *= (b-a)/2.0;
+    return Int;
+  }
+}; // Do not forget ";" after the closing brace of a class definition !!!
+
+#endif // FUNCTION_BASE_HPP
