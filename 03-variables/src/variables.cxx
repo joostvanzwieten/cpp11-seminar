@@ -1,5 +1,5 @@
 /**
- * 03-variables.cxx
+ * \file variables.cxx
  *
  * This file is part of the seminar: From the basics of modern OOP to
  * parallel scientific programming in C++11.
