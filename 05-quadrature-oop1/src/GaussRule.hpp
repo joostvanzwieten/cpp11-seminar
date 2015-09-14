@@ -222,9 +222,9 @@ public:
     delete[] w;
   }
 
-  // 1. Method that evaluates the integral of a given callback
-  // function over the interval [a,b]. This is the simplest way to
-  // pass a callback function.
+  // Method that evaluates the integral of a given callback function
+  // over the interval [a,b]. This is the simplest way to pass a
+  // callback function.
   double eval(double f(double), double a, double b){
     // Initialize local variable
     double Int = 0.0;
@@ -235,21 +235,6 @@ public:
     Int *= (b-a)/2.0;
     return Int;
   }
-
-  // 2. Method that evaluates the integral of a given callback
-  // function over the interval [a,b]
-  double eval_functor(std::function<double(double)> f, double a, double b){
-    // Initialize local variable
-    double Int = 0.0;
-
-    // int_a^b f(x) dx = (b-a)/2 * sum_{k=0}^n w[k]*f((b-a)/2 * x[k] + (a+b)/2 ) 
-    for (int k=0; k<N; k++)
-      Int += w[k]*f((b-a)/2.0 * x[k] + (a+b)/2.0);
-    Int *= (b-a)/2.0;
-    return Int;
-  }
-
-  
   
 }; // Do not forget ";" after the closing brace of a class definition !!!
 

@@ -118,20 +118,7 @@ int main (int argc,  char** argv){
   // expressions are actually meant for, efficient coding.
   cout << "3-pt Gauss quadrature rule: " << GR3.eval([](double x){return cos(x);}, a, b) << endl;
   cout << n << "-pt Gauss quadrature rule: " << GRn.eval([](double x){return cos(x);}, a, b) << endl;
-  
-  // Pass callback functions using the C++11 functor wrapper
-  // (std::function) We can create a funtor wrapper both for
-  // traditional functions (myfunc) and lambda expressions
-  // (myfunc_lambda).
-  auto myfunc_functor1 = std::cref(myfunc);
-  auto myfunc_functor2 = std::cref(myfunc_lambda);
-  
-  cout << "3-pt Gauss quadrature rule: " << GR3.eval_functor(myfunc_functor1, a, b) << endl;
-  cout << n << "-pt Gauss quadrature rule: " << GRn.eval_functor(myfunc_functor1, a, b) << endl;
-
-  cout << "3-pt Gauss quadrature rule: " << GR3.eval_functor(myfunc_functor2, a, b) << endl;
-  cout << n << "-pt Gauss quadrature rule: " << GRn.eval_functor(myfunc_functor2, a, b) << endl;
-  
+    
   // End program
   return 0;
 }
