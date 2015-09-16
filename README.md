@@ -1,3 +1,6 @@
+README
+======
+
 This repository contains examples and tutorials for the seminar:
 
 'From the basics of modern OOP to parallel programming in C++11'
