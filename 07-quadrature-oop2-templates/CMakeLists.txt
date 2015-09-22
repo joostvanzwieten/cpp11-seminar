@@ -1,7 +1,7 @@
-# Force CMake version 2.6 or above
-cmake_minimum_required (VERSION 2.6)
+# Force CMake version 3.1 or above
+cmake_minimum_required (VERSION 3.1)
 
-# This project has the name: 07-quadrature-oop1-templates 
+# This project has the name: 07-quadrature-oop2-templates 
 project (07-quadrature-oop2-templates)
 
 # Create an executable named 'quadrature-oop2-templates' from the source file 'quadrature-oop2-templates.cxx'
