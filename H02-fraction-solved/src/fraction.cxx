@@ -77,10 +77,12 @@ int main()
 {
     using namespace std;
     Fraction a(2, -3);
+    Fraction a_normalized(2, -3, true);
     Fraction b(1, 5);
 
     cout << "a = " << a << endl;
-    cout << "b = " << a << endl;
+    cout << "a_normalized = " << a_normalized << endl;
+    cout << "b = " << b << endl;
 
     cout << "3*a+b = " << 3*a+b << " = " << (3*a+b).normalized() << endl;
     cout << "a-b = " << a-b << " = " << (a-b).normalized() << endl;
