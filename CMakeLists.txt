@@ -15,7 +15,10 @@ add_subdirectory(04-quadrature-static)
 add_subdirectory(05-quadrature-oop1)
 add_subdirectory(06-quadrature-oop1-templates)
 add_subdirectory(07-quadrature-oop2-templates)
+add_subdirectory(08-derived-classes)
 
 # Homework
-add_subdirectory(H02-fraction)
+#add_subdirectory(H02-fraction)
+add_subdirectory(H02-fraction-solved)
+add_subdirectory(H03-matrix-vector)
 
