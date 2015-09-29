@@ -32,17 +32,8 @@ Vector<T, I> range(I n, I step=1)
     return vec;
 }
 
-void test_identity(int n)
-{
-    DenseMatrix<double, int> eye(n, n);
-    eye = 0;
-    for (int i = 0; i < n; i++)
-        eye(i,i) = 1;
-    Vector<double, int> x = range<double, int>(n);
-    TEST("test_identity", equal(x, eye.matvec(x), 1e-14));
-}
-
-void test_matvec(int n)
+template<typename T, typename I>
+DenseMatrix<T, I> negative_laplace(I n)
 {
     DenseMatrix<int, int> A(n, n);
     A = 0;
@@ -55,7 +46,22 @@ void test_matvec(int n)
             A(i,i-1) = -1;
         }
     }
+    return A;
+}
 
+void test_identity(int n)
+{
+    DenseMatrix<double, int> eye(n, n);
+    eye = 0;
+    for (int i = 0; i < n; i++)
+        eye(i,i) = 1;
+    Vector<double, int> x = range<double, int>(n);
+    TEST("test_identity", equal(x, eye.matvec(x), 1e-14));
+}
+
+void test_matvec(int n)
+{
+    DenseMatrix<int, int> A = negative_laplace<int, int>(n);
     Vector<int, int> x(n), y(n);
     for (int i = 0; i < n; i++)
         x(i) = i*i-1;
@@ -74,9 +80,21 @@ void test_vector_arithmetic(int n)
     TEST("test_vector_arithmetic", equal(x, range<int, int>(n, 24)));
 }
 
+void test_dot(int n)
+{
+    DenseMatrix<int, int> A = negative_laplace<int, int>(n);
+    Vector<int, int> x = range<int, int>(n);
+    int value_standard = 0;
+    for (int i = 0; i < n; i++)
+        value_standard += i*i;
+    TEST("test_dot - standard", dot(x, x) == value_standard);
+    TEST("test_dot - laplace", dot(A, x, x) == n*(n-1));
+}
+
 int main()
 {
     test_identity(5);
     test_matvec(5);
     test_vector_arithmetic(5);
+    test_dot(5);
 }
