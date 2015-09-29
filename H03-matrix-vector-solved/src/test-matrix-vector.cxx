@@ -3,7 +3,28 @@
 #include "matrix-vector.hpp"
 using namespace std;
 
-#define TEST(name, test) cout << (name) << ": " << ((test) ? "PASSED" : "FAILED") << endl;
+#ifdef HAVE_UNISTD_H
+# include <unistd.h>
+#endif
+
+void TEST(const char *name, bool test)
+{
+    cout << name << ": ";
+    const char *clr_red = "", *clr_green = "", *clr_clear = "";
+#ifdef HAVE_UNISTD_H
+    if (isatty(1))
+    {
+        clr_red = "\033[31m";
+        clr_green = "\033[32m";
+        clr_clear = "\033[0m";
+    }
+#endif
+    if (test)
+        cout << clr_green << "PASSED" << clr_clear;
+    else
+        cout << clr_green << "FAILED" << clr_clear;
+    cout << endl;
+}
 
 template<typename I>
 bool equal(const Vector<int, I> &l, const Vector<int, I> &r)

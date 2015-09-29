@@ -2,6 +2,12 @@ cmake_minimum_required (VERSION 3.1)
 
 project (H03-matrix-vector-solved)
 
+include(CheckIncludeFiles)
+check_include_files(unistd.h HAVE_UNISTD_H)
+if(HAVE_UNISTD_H)
+    add_definitions(-DHAVE_UNISTD_H)
+endif()
+
 add_executable(test-matrix-vector src/test-matrix-vector.cxx)
 
 # We make use of some features from the C++11 standard. CMake provides
