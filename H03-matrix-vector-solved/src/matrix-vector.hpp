@@ -69,7 +69,7 @@ public:
 
     // In-place add operator.  Computes the sum of this vector and `r` and
     // stores the result in this vector.
-    Vector<T, I>& operator+=(const Vector<T, I>& r)
+    Vector<T, I>& operator+=(const Vector &r)
     {
         for (I i = 0; i < this->length; i++)
             (*this)(i) += r(i);
@@ -78,7 +78,7 @@ public:
 
     // In-place subtract operator.  Computes the difference of this vector and
     // `r` and stores the result in this vector.
-    Vector<T, I>& operator-=(const Vector<T, I>& r)
+    Vector<T, I>& operator-=(const Vector &r)
     {
         for (I i = 0; i < this->length; i++)
             (*this)(i) -= r(i);
@@ -87,7 +87,7 @@ public:
 
     // Add operator.  Computes the sum of this vector and `r` and returns the
     // result.
-    Vector operator+(const Vector<T, I>& r) const
+    Vector operator+(const Vector<T, I> &r) const
     {
         Vector<T, I> result(this->length);
         for (I i = 0; i < this->length; i++)
@@ -97,7 +97,7 @@ public:
 
     // Subtract operator.  Computes the difference of this vector and `r` and
     // returns the result.
-    Vector operator-(const Vector<T, I>& r) const
+    Vector operator-(const Vector<T, I> &r) const
     {
         Vector<T, I> result(this->length);
         for (I i = 0; i < this->length; i++)
@@ -125,7 +125,7 @@ private:
 // Scalar-vector multiplication.  Multiplies every element of `r` with scalar
 // `l` and returns the result.
 template<typename T, typename I>
-Vector<T, I> operator*(T l, const Vector<T, I>& r)
+Vector<T, I> operator*(T l, const Vector<T, I> &r)
 {
     Vector<T, I> result(r.length);
     for (I i = 0; i < r.length; i++)
