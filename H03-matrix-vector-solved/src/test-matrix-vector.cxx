@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include "matrix-vector.hpp"
+#include "fraction.hpp"
 using namespace std;
 
 #ifdef HAVE_UNISTD_H
@@ -103,10 +104,27 @@ void test_dot(int n)
     TEST("test_dot - laplace", dot(A, x, x) == n*(n-1));
 }
 
+void test_fraction()
+{
+    DenseMatrix<Fraction, int> A(2,2);
+    A(0,0) = Fraction(1);
+    A(0,1) = Fraction(1,2);
+    A(1,0) = Fraction(1,2);
+    A(1,1) = Fraction(1,4);
+    Vector<Fraction, int> x(2);
+    x(0) = 1;
+    x(1) = 2;
+    Vector<Fraction, int> y(2);
+    y(0) = 2;
+    y(1) = 1;
+    TEST("test_fraction", A.matvec(x) == y);
+}
+
 int main()
 {
     test_identity(5);
     test_matvec(5);
     test_vector_arithmetic(5);
     test_dot(5);
+    test_fraction();
 }
