@@ -105,6 +105,16 @@ public:
         return result;
     }
 
+    // Compare operator.  Returns `true` if the left and right hand side are
+    // equal, `false` otherwise.
+    bool operator==(const Vector &r) const
+    {
+        for (I i = 0; i < this->length; i++)
+            if ((*this)(i) != r(i))
+                return false;
+        return true;
+    }
+
     // Length of this vector.
     I length;
 

@@ -27,16 +27,7 @@ void TEST(const char *name, bool test)
 }
 
 template<typename I>
-bool equal(const Vector<int, I> &l, const Vector<int, I> &r)
-{
-    for (I i = 0; i < l.length; i++)
-        if (l(i) != r(i))
-            return false;
-    return true;
-}
-
-template<typename I>
-bool equal(const Vector<double, I> &l, const Vector<double, I> &r, double tolerance)
+bool almost_equal(const Vector<double, I> &l, const Vector<double, I> &r, double tolerance)
 {
     for (I i = 0; i < l.length; i++)
         if (abs(l(i)-r(i)) > tolerance)
@@ -77,7 +68,7 @@ void test_identity(int n)
     for (int i = 0; i < n; i++)
         eye(i,i) = 1;
     Vector<double, int> x = range<double, int>(n);
-    TEST("test_identity", equal(x, eye.matvec(x), 1e-14));
+    TEST("test_identity", almost_equal(x, eye.matvec(x), 1e-14));
 }
 
 void test_matvec(int n)
@@ -89,7 +80,7 @@ void test_matvec(int n)
     y = -2;
     y(n-1) = n*n-3;
 
-    TEST("test_matvec", equal(A.matvec(x), y));
+    TEST("test_matvec", A.matvec(x) == y);
 }
 
 void test_vector_arithmetic(int n)
@@ -98,7 +89,7 @@ void test_vector_arithmetic(int n)
     x = 2*x;
     x += x+2*x;
     x -= x-3*x;
-    TEST("test_vector_arithmetic", equal(x, range<int, int>(n, 24)));
+    TEST("test_vector_arithmetic", x == range<int, int>(n, 24));
 }
 
 void test_dot(int n)
