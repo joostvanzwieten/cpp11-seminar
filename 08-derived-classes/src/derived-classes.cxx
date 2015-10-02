@@ -23,4 +23,5 @@ public:
 int main() {
   Base  b(1);
   Super s(2,3);
+  return 0;
 }
