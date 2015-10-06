@@ -23,7 +23,7 @@ void TEST(const char *name, bool test)
     if (test)
         cout << clr_green << "PASSED" << clr_clear;
     else
-        cout << clr_green << "FAILED" << clr_clear;
+        cout << clr_red << "FAILED" << clr_clear;
     cout << endl;
 }
 
