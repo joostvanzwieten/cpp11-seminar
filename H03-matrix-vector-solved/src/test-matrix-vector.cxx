@@ -8,7 +8,7 @@ using namespace std;
 # include <unistd.h>
 #endif
 
-void TEST(const char *name, bool test)
+bool TEST(const char *name, bool test)
 {
     cout << name << ": ";
     const char *clr_red = "", *clr_green = "", *clr_clear = "";
@@ -25,6 +25,7 @@ void TEST(const char *name, bool test)
     else
         cout << clr_red << "FAILED" << clr_clear;
     cout << endl;
+    return test;
 }
 
 template<typename I>
@@ -62,17 +63,17 @@ DenseMatrix<T, I> negative_laplace(I n)
     return A;
 }
 
-void test_identity(int n)
+bool test_identity(int n)
 {
     DenseMatrix<double, int> eye(n, n);
     eye = 0;
     for (int i = 0; i < n; i++)
         eye(i,i) = 1;
     Vector<double, int> x = range<double, int>(n);
-    TEST("test_identity", almost_equal(x, eye.matvec(x), 1e-14));
+    return TEST("test_identity", almost_equal(x, eye.matvec(x), 1e-14));
 }
 
-void test_matvec(int n)
+bool test_matvec(int n)
 {
     DenseMatrix<int, int> A = negative_laplace<int, int>(n);
     Vector<int, int> x(n), y(n);
@@ -80,31 +81,30 @@ void test_matvec(int n)
         x(i) = i*i-1;
     y = -2;
     y(n-1) = n*n-3;
-
-    TEST("test_matvec", A.matvec(x) == y);
+    return TEST("test_matvec", A.matvec(x) == y);
 }
 
-void test_vector_arithmetic(int n)
+bool test_vector_arithmetic(int n)
 {
     Vector<int, int> x = range<int, int>(n);
     x = 2*x;
     x += x+2*x;
     x -= x-3*x;
-    TEST("test_vector_arithmetic", x == range<int, int>(n, 24));
+    return TEST("test_vector_arithmetic", x == range<int, int>(n, 24));
 }
 
-void test_dot(int n)
+bool test_dot(int n)
 {
     DenseMatrix<int, int> A = negative_laplace<int, int>(n);
     Vector<int, int> x = range<int, int>(n);
     int value_standard = 0;
     for (int i = 0; i < n; i++)
         value_standard += i*i;
-    TEST("test_dot - standard", dot(x, x) == value_standard);
-    TEST("test_dot - laplace", dot(A, x, x) == n*(n-1));
+    return TEST("test_dot - standard", dot(x, x) == value_standard)
+        && TEST("test_dot - laplace", dot(A, x, x) == n*(n-1));
 }
 
-void test_fraction()
+bool test_fraction()
 {
     DenseMatrix<Fraction, int> A(2,2);
     A(0,0) = Fraction(1);
@@ -117,14 +117,16 @@ void test_fraction()
     Vector<Fraction, int> y(2);
     y(0) = 2;
     y(1) = 1;
-    TEST("test_fraction", A.matvec(x) == y);
+    return TEST("test_fraction", A.matvec(x) == y);
 }
 
 int main()
 {
-    test_identity(5);
-    test_matvec(5);
-    test_vector_arithmetic(5);
-    test_dot(5);
-    test_fraction();
+    bool passed = true;
+    passed &= test_identity(5);
+    passed &= test_matvec(5);
+    passed &= test_vector_arithmetic(5);
+    passed &= test_dot(5);
+    passed &= test_fraction();
+    return passed ? 0 : 1;
 }
