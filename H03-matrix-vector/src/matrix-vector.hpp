@@ -69,14 +69,14 @@ public:
 
     // In-place add operator.  Computes the sum of this vector and `r` and
     // stores the result in this vector.
-    Vector<T, I>& operator+=(const Vector &r)
+    Vector& operator+=(const Vector &r)
     {
         // TODO
     }
 
     // In-place subtract operator.  Computes the difference of this vector and
     // `r` and stores the result in this vector.
-    Vector<T, I>& operator-=(const Vector &r)
+    Vector& operator-=(const Vector &r)
     {
         // TODO
     }
