@@ -16,6 +16,7 @@ add_subdirectory(05-quadrature-oop1)
 add_subdirectory(06-quadrature-oop1-templates)
 add_subdirectory(07-quadrature-oop2-templates)
 add_subdirectory(08-derived-classes)
+add_subdirectory(09-factorial)
 
 # Homework
 #add_subdirectory(H02-fraction)
