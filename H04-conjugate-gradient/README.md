@@ -35,7 +35,7 @@ desired tolerance if the Conjugate Gradient method converged within `maxiter`,
 otherwise `-1`.
 
 Use your implementation of the `Matrix` and `Vector` classes of [homework 3].
-Test the conjugate gradient method using a laplace matrix or any other
+Test the conjugate gradient method using a Laplace matrix or any other
 symmetric positive definite matrix.  Unlike the previous homeworks you have to
 create a `CMakeLists.txt` yourself, e.g. copy the `CMakeLists.txt` from the
 previous homework and update the project name, executable name and source
