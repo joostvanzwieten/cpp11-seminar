@@ -7,7 +7,7 @@ Gradient method, given in pseudocode as
 
     p_0 = r_0 = b - A x_0
     for k = 0, 1, ..., maxiter-1
-        alpha_k = dot(r_k,r_k) / A_dot(r_k,r_k)
+        alpha_k = dot(r_k,r_k) / A_dot(p_k,p_k)
         x_k+1 = x_k + alpha_k p
         r_k+1 = r_k - alpha_k A p
         if dot(r_k+1,r_k+1) < tol*tol
