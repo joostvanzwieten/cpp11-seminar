@@ -49,9 +49,9 @@ Vector<T, I> range(I n, I step=1)
 template<typename T, typename I>
 DenseMatrix<T, I> negative_laplace(I n)
 {
-    DenseMatrix<int, int> A(n, n);
+    DenseMatrix<T, I> A(n, n);
     A = 0;
-    for (int i = 0; i < n; i++)
+    for (I i = 0; i < n; i++)
     {
         A(i,i) = 2;
         if (i > 0)
